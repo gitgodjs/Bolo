@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --color-dark-blue: #111B3D;
+  --azul-oscuro: #050614;
+  --color-navy-blue: #304264;
+  --azul-suave: #607597;
+  --azul-suave-text: #C9CEE0;
+
+  --font-titulos: 'Gluten', sans-serif;
+  --font-texto: 'Vina Sans', sans-serif;
+}
+
+
