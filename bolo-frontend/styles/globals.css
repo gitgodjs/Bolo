@@ -3,8 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --color-dark-blue: #111B3D;
+  --background: #1725537b;
   --azul-oscuro: #050614;
   --color-navy-blue: #304264;
   --azul-suave: #607597;
@@ -14,4 +13,11 @@
   --font-texto: 'Vina Sans', sans-serif;
 }
 
+body {
+  background-color: var(--azul-oscuro);
+}
 
+h1 {
+  font-family: var(--font-titulos);
+  font-weight: 400;
+}
