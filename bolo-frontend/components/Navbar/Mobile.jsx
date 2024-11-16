@@ -1,14 +1,28 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from 'next/navigation';
 import { UserCircleIcon, MagnifyingGlassIcon, TicketIcon, BanknotesIcon } from '@heroicons/react/24/solid';
 import { MoonIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '@/components/Auth/AuthContext';
+import { useEffect, useState } from "react";
 
 const MobileNav = () => {
   const { user } = useAuth();
+  const [isLogin, setIsLogin] = useState(false);
+
+  const pathname = usePathname();
+  useEffect(() => {
+    if(pathname == "/signin" || pathname == "/signup") {
+      setIsLogin(true)
+    }
+  }, []);
 
   const buildHref = (ruta) => user?.nombre ? `/${ruta}` : "/signup/complete";
+
+  if(isLogin){
+    return(<div></div>);
+  }
 
   return (
     <div className="fixed rounded-md border-t-2 border-[#304264] bottom-0 left-0 right-0 bg-[#111B3D] shadow-lg flex justify-around items-center px-4 sm:hidden">

@@ -31,15 +31,9 @@ export const AuthProvider = ({ children }) => {
    const expirationDate = Date.now() + expires_in * 1000;
    localStorage.setItem('token_expiration', expirationDate);
 
-
-   // Mostrar el tiempo legible donde expira el token (opcional)
-   //const formattedDate = new Date(expirationDate).toLocaleString();
-
-
    const res = await apiFunctions.get_from_api_token("get_credentials_from_token", {}, token);
    const data = await res.json();
    setUser(data);
-
 
    toast.success('Sesion Inicada con exito.', { id: 'clipboard' })
    router.push('/');
@@ -73,8 +67,7 @@ export const AuthProvider = ({ children }) => {
        const data = await res.json();
 
        if (!data.nombre) {
-         router.push('/signup/complete');
-         return;
+       //  router.push('/signup/complete');
        } else {
          setUser(data);
          if (typeof setUserRol === 'function') {

@@ -1,15 +1,36 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from 'next/navigation';
 import { UserCircleIcon, MagnifyingGlassIcon, TicketIcon, BanknotesIcon } from '@heroicons/react/24/solid';
 import { MoonIcon  } from "@heroicons/react/24/outline";
 import { useAuth } from '@/components/Auth/AuthContext';
+import { useState, useEffect } from "react";
 import Logo from "../Common/Logo";
 
 const Nav = ({ setIsMenuOpen = null, isMenuOpen = false }) => {
   const { user, logout } = useAuth();
+  const [isLogin, setIsLogin] = useState(false);
+
+  const pathname = usePathname();
+  useEffect(() => {
+    if(pathname == "/signin" || pathname == "/signup") {
+      setIsLogin(true)
+    }
+  }, []);
 
   const buildHref = (ruta) => user?.nombre ? `/${ruta}` : "/signup/complete";
+  
+  if(isLogin){
+    return(
+      <div className="w-full h-full sm:flex hidden justify-between items-center px-8 py-4 bg-[#1725537b] shadow-lg">
+      <Logo
+          width = {200} 
+          height = {200}
+      />
+      </div>
+    );
+  };
 
   return (
     <>

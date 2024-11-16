@@ -5,7 +5,7 @@ import { Toaster } from 'sonner';
 import Nav from '@/components/Navbar/Desktop';
 import MobileNav from '@/components/Navbar/Mobile';
 import { useState } from 'react';
-import { AuthProvider } from '@/components/Auth/AuthContext'; // Ajusta la ruta según sea necesario
+import { AuthProvider } from '@/components/Auth/AuthContext';
 
 const RootLayout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,10 +17,10 @@ const RootLayout = ({ children }) => {
           <link rel="preconnect" href="https://fonts.googleapis.com"/>
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
           <link rel="icon" type="image/x-icon" href="logo.png"></link>
-
           <link
-          href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&family=Vina+Sans&family=Passion+One:wght@400;700;900&display=swap" rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&family=Vina+Sans&family=Passion+One:wght@400;700;900&display=swap" rel="stylesheet"
           />
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"></link>
           <Script
             src="https://kit.fontawesome.com/38eaca6879.js"
             crossOrigin="anonymous"

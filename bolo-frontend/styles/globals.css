@@ -8,6 +8,7 @@
   --color-navy-blue: #304264;
   --azul-suave: #607597;
   --azul-suave-text: #C9CEE0;
+  --azul-suave-text2:rgb(6, 10, 131)0;
 
   --font-titulos: 'Gluten', sans-serif;
   --font-texto: 'Vina Sans', sans-serif;
@@ -20,4 +21,9 @@ body {
 h1 {
   font-family: var(--font-titulos);
   font-weight: 400;
+}
+
+p {
+  font-family: "Noto Sans", sans-serif;
+  font-weight: 300;
 }
