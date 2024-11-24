@@ -4,11 +4,23 @@ import Script from "next/script";
 import { Toaster } from 'sonner';
 import Nav from '@/components/Navbar/Desktop';
 import MobileNav from '@/components/Navbar/Mobile';
-import { useState } from 'react';
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from 'react';
 import { AuthProvider } from '@/components/Auth/AuthContext';
 
 const RootLayout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLog, setIsLog] = useState(false);
+
+  const path = usePathname();
+
+  useEffect(()=>{
+    if(path == "/signup" || path == "/signin") {
+      setIsLog(true)
+    } else {
+      setIsLog(false); 
+    };
+  }, [path])
 
   return (
     <AuthProvider>
@@ -21,10 +33,7 @@ const RootLayout = ({ children }) => {
             href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&family=Vina+Sans&family=Passion+One:wght@400;700;900&display=swap" rel="stylesheet"
           />
           <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"></link>
-          <Script
-            src="https://kit.fontawesome.com/38eaca6879.js"
-            crossOrigin="anonymous"
-          />
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&display=swap" rel="stylesheet"></link>
           <title>Bolo</title>
         </head>
         <body className={isMenuOpen ? "" : ""} onClick={(e) => {
@@ -32,11 +41,16 @@ const RootLayout = ({ children }) => {
             setIsMenuOpen(false);
           }
         }}>
-          <div className="nav-container">
-            <Nav setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} />
-          </div>
-          <main>{children}</main>
-          <MobileNav />
+          {!isLog ? (
+            <div>
+              <div className="nav-container">
+                <Nav setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} />
+              </div>
+              <main>{children}</main>
+              <MobileNav />
+            </div>
+          ) : <main>{children}</main>}
+
           <Toaster 
             position='bottom-center'
             duration={1500}

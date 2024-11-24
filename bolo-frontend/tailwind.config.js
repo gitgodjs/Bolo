@@ -8,12 +8,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'background': '#ffffff',
-        'color-dark-blue': '#111B3D',
-        'azul-oscuro': '#050614',
-        'color-navy-blue': '#304264',
-        'azul-suave': '#607597',
-        'azul-suave-text': '#C9CEE0',
+        background: 'rgb(var(--background) / <alpha-value>)',
+        dark: 'rgb(var(--color-dark) / <alpha-value>)',
+        mediumDark: 'rgb(var(--color-medium-dark) / <alpha-value>)',
+        medium: 'rgb(var(--color-medium) / <alpha-value>)',
+        light: 'rgb(var(--color-light) / <alpha-value>)',
       },
       fontFamily: {
         titulos: ['Gluten', 'sans-serif'],

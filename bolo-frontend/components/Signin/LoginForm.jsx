@@ -2,22 +2,23 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import InputText from '@/components/Common/InputText';
+import Checkbox from '../Common/Checkbox';
 import Logo from '../Common/Logo';
 
 const LoginForm = () => {
   const [correo, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isChecked, setIsChecked] = useState(false); 
   const [allComplete, setAllComplete] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingRegistro, setIsLoadingRegistro] = useState(false); 
 
-  // Detecta si los campos están completos
   useEffect(() => {
-    if (correo && password) {
+    if (correo && password && isChecked) {
       setAllComplete(true);
     } else {
       setAllComplete(false);
     }
-  }, [correo, password]);
+  }, [correo, password, isChecked]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -29,73 +30,67 @@ const LoginForm = () => {
     }
   };
 
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Lógica de envío de formulario omitida para solo mostrar la parte estética
+    setIsLoadingRegistro(true);
+    setTimeout(() => {
+      setIsLoadingRegistro(false);
+    }, 2000);
   };
 
   return (
-    <form
-      className="w-[90vw] h-[80vh] md:w-40 bg-[#1725537b] md:h-[27rem] md:w-[40rem] md:shadow-lg rounded-md flex flex-col justify-center items-center"
-      onSubmit={handleSubmit}
-    >
-      <Logo 
-      width={150}
-      height={150}
-      />
-
-      {/* Email Input */}
-      <div className="mt-8 w-[80%]">
-        <InputText
-          type="text"
-          placeholder="Correo"
-          id="email_registro"
-          onChange={handleInputChange}
-          value={correo}
+    <div className='h-screen w-screen md:h-[75%] md:w-[60%] flex flex-col md:grid grid-cols-2 gap-8 p-4 bg-[#000000]'>
+      <div className='hidden md:flex flex-col items-center'>
+        <Logo 
+        width={300}
+        height={300}
         />
+        <p className=':block w-[80%] text-xl text-white'>Si tienes una cuenta registrada en <span className='text-[#ffd000]'>Bolo</span> puedes iniciar tu sesion para continuar con tu cuenta.</p>
       </div>
-
-      {/* Password Input */}
-      <div className="my-3 w-[80%]">
-        <InputText
-          type="password"
-          placeholder="Contraseña"
-          id="password_registro"
-          onChange={handleInputChange}
-          value={password}
-        />
+      <div className='flex flex-col p-2 gap-10'>
+        <div className='mt-4'>
+          <h1 className='text-white text-3xl'>Inicia sesión</h1>
+        </div>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+          <div className="my-3 w-[100%]">
+            <InputText 
+              type="email" 
+              id="email_registro" 
+              placeholder="Correo" 
+              value={correo} 
+              onChange={handleInputChange} 
+            />
+          </div>
+          <div className="mb-3 w-[100%]">
+            <InputText 
+              type="password" 
+              id="password_registro" 
+              placeholder="Contraseña" 
+              value={password} 
+              onChange={handleInputChange} 
+            />
+          </div>
+          <div className="w-[80%] flex items-center align-center">
+            <Checkbox id="terminos_check" checked={isChecked} onChange={handleCheckboxChange} /> 
+            <span className="text-white ml-2">Acepto los <span className="text-[#ffd000]">términos y condiciones</span></span> 
+          </div>
+          <button 
+            type="submit" 
+            className={allComplete ? "bg-[#0033ab] mt-5 hover:bg-[#0018ab] transition-all-02s rounded-md py-4 px-20 text-lg font-semibold text-white mb-2" 
+            : "mt-5 bg-[#E1E1E1] mb-2 rounded-md py-4 px-20 text-lg font-semibold text-gray-500 mb-6"}
+            disabled={!allComplete || isLoadingRegistro} 
+          >
+            {isLoadingRegistro ? <div className="w-5 h-5 rounded-full animate-spin border-y border-solid border-yellow-500 border-t-transparent"></div> : 'Iniciar sesión'}
+          </button>
+          <p className='text-white text-xl'>Si todavia no tienes una cuenta puedes <Link href={"/signup"} className='text-[#346bea] underline'>registrarte</Link></p>
+          <p className='text-white text-xl'>Si perdiste tu cuenta puedes <Link href={"/signin/recuperar"} className='text-[#346bea] underline'>recuperarla</Link></p>
+        </form>
       </div>
-
-      {/* Submit Button */}
-      <button
-        type="submit"
-        className={allComplete ? "bg-[#F06C15] hover:bg-[#eb7b31] transition-all-02s rounded-md py-4 px-20 text-lg font-semibold text-white mb-6" : "bg-[#E1E1E1] mb-2 rounded-md py-4 px-20 text-lg font-semibold text-gray-500 mb-6"}
-      >
-        {isLoading ? (
-          <div className="w-5 h-5 rounded-full animate-spin border-y border-solid border-yellow-500 border-t-transparent"></div>
-        ) : (
-          'Inicia sesión'
-        )}
-      </button>
-
-      {/* Links */}
-      <div className="flex mb-4 items-center">
-        <span>
-          ¿Aún no preregistrado?{" "}
-          <Link href="/signup" className="text-[#F06C15] cursor-pointer underline">
-            Pre-registrate ahora
-          </Link>
-        </span>
-      </div>
-      <div className="flex mb-4 items-center">
-        <span>
-          ¿Olvidaste tu contraseña?{" "}
-          <Link href="/signin/recuperar" className="text-[#F06C15] cursor-pointer underline">
-            Recuperar
-          </Link>
-        </span>
-      </div>
-    </form>
+    </div>
   );
 }
 
