@@ -43,13 +43,19 @@ const LoginForm = () => {
   };
 
   return (
-    <div className='h-screen w-screen md:h-[75%] md:w-[60%] flex flex-col md:grid grid-cols-2 gap-8 p-4 bg-[#000000]'>
+    <div className='h-screen w-screen md:h-[60%] md:w-[60%] flex flex-col md:grid grid-cols-2 gap-8 p-4 bg-[#000000] rounded-[15px]'>
       <div className='hidden md:flex flex-col items-center'>
         <Logo 
         width={300}
         height={300}
         />
-        <p className=':block w-[80%] text-xl text-white'>Si tienes una cuenta registrada en <span className='text-[#ffd000]'>Bolo</span> puedes iniciar tu sesion para continuar con tu cuenta.</p>
+        <p className=':block w-[80%] mt-4 text-2xl text-white'>Si tienes una cuenta registrada en <span className='text-[#ffd000]'>Bolo</span> puedes iniciar tu sesion para continuar con tu cuenta.</p>
+      </div>
+      <div className='flex mt-2 justify-center md:hidden'>
+      <Logo 
+        width={200}
+        height={200}
+        />
       </div>
       <div className='flex flex-col p-2 gap-10'>
         <div className='mt-4'>
@@ -73,10 +79,6 @@ const LoginForm = () => {
               value={password} 
               onChange={handleInputChange} 
             />
-          </div>
-          <div className="w-[80%] flex items-center align-center">
-            <Checkbox id="terminos_check" checked={isChecked} onChange={handleCheckboxChange} /> 
-            <span className="text-white ml-2">Acepto los <span className="text-[#ffd000]">términos y condiciones</span></span> 
           </div>
           <button 
             type="submit" 

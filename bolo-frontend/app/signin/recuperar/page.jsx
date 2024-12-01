@@ -1,19 +1,19 @@
 "use client"
 
-import LoginForm from '@/components/Signin/LoginForm';
+import LoginRecuperarForm from '@/components/Signin/LoginRecuperarForm';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/components/Auth/AuthContext';
 import { useRouter } from "next/navigation";
 
-const SigninPage = () => {
+const RecuperarPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
   return (
     <div style={{ height: '100vh' }} className="bg-[#FBFBFB] flex flex-col">
-      <div className="h-full bg-[#232624] flex justify-center items-center"><LoginForm/></div>
+      <div className="h-full bg-[#232624] flex justify-center items-center"><LoginRecuperarForm/></div>
       
       {/*<Footer/>*/}
     </div>
   )
 }
 
-export default SigninPage
+export default RecuperarPage

@@ -1,156 +1,111 @@
 "use client"
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import InputText from '@/components/Common/InputText';
+import Checkbox from '../Common/Checkbox';
+import Logo from '../Common/Logo';
 
-import InputText from '@/components/Common/InputText'
-import Checkbox from '@/components/Common/Checkbox'
-import InputCode from '@/components/Common/InputCode'
-import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import Logo from '../Common/Logo'
+const LoginForm = () => {
+  const [correo, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isChecked, setIsChecked] = useState(false); 
+  const [allComplete, setAllComplete] = useState(false);
+  const [isLoadingRegistro, setIsLoadingRegistro] = useState(false); 
 
-const RegistroForm = () => {
-  const [correo, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [termsChecked, setTermsChecked] = useState(false)
-  const [prestadorChecked, setPrestadorChecked] = useState(false)
-  const [allComplete, setAllComplete] = useState(false)
-  const [isLoadingRegistro, setIsLoadingRegistro] = useState(false)
-  const [codigo, setCodigo] = useState('')
-  const [isCodeSent, setIsCodeSent] = useState(false)
-
-  // Detecta si los campos están completos
   useEffect(() => {
-    setAllComplete(correo && password && confirmPassword && termsChecked)
-  }, [correo, password, confirmPassword, termsChecked])
+    if (correo && password && isChecked) {
+      setAllComplete(true);
+    } else {
+      setAllComplete(false);
+    }
+  }, [correo, password, isChecked]);
 
   const handleInputChange = (e) => {
-    const { id, value } = e.target
-    switch (id) {
-      case 'email_registro':
-        setEmail(value)
-        break
-      case 'password_registro':
-        setPassword(value)
-        break
-      case 'password_confirm_registro':
-        setConfirmPassword(value)
-        break
-      case 'terminos_check':
-        setTermsChecked(!termsChecked)
-        break
-      case 'prestador_check':
-        setPrestadorChecked(!prestadorChecked)
-        break
-      case 'codigo_verificacion':
-        setCodigo(value)
-        break
-      default:
-        break
+    const { id, value } = e.target;
+
+    if (id === 'email_registro') {
+      setEmail(value);
+    } else if (id === 'password_registro') {
+      setPassword(value);
     }
-  }
+  };
+
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoadingRegistro(true);
+    setTimeout(() => {
+      setIsLoadingRegistro(false);
+    }, 2000);
+  };
 
   return (
-    <>
-      {!isCodeSent ? (
-        <form className="w-[90vw] h-[80vh] md:w-40 bg-[#1725537b] md:h-[33rem] md:w-[40rem] md:shadow-lg rounded-md flex flex-col justify-center items-center">
-          <Logo 
-          width={150}
-          height={150}
+    <div className='h-screen w-screen md:h-[60%] md:w-[60%] flex flex-col md:grid grid-cols-2 gap-8 p-4 bg-[#000000] rounded-[15px]'>
+      <div className='hidden md:flex flex-col items-center'>
+        <Logo 
+        width={300}
+        height={300}
+        />
+        <p className=':block w-[80%] mt-4 text-2xl text-white'>Si todavia no tienes tu cuenta en <span className='text-[#ffd000]'>Bolo</span> puedes crearla para comenzar.</p>
+      </div>
+      <div className='flex justify-center md:hidden'>
+        <Logo 
+          width={200}
+          height={200}
           />
-          <div className="mt-4 py-3 w-[80%]">
-            <InputText
-              type="text"
-              placeholder="Correo"
-              id="email_registro"
-              onChange={handleInputChange}
-              value={correo}
+      </div>
+      <div className='flex flex-col p-2 gap-10'>
+        <div className='mt-4'>
+          <h1 className='text-white text-3xl'>Registrate</h1>
+        </div>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+          <div className="my-3 w-[100%]">
+            <InputText 
+              type="email" 
+              id="email_registro" 
+              placeholder="Correo" 
+              value={correo} 
+              onChange={handleInputChange} 
             />
           </div>
-          <div className="my-3 py-3 w-[80%]">
-            <InputText
-              type="password"
-              placeholder="Contraseña"
-              id="password_registro"
-              onChange={handleInputChange}
-              value={password}
+          <div className="mb-3 w-[100%]">
+            <InputText 
+              type="password" 
+              id="password_registro" 
+              placeholder="Contraseña" 
+              value={password} 
+              onChange={handleInputChange} 
             />
           </div>
-          <div className="mb-3 py-3 w-[80%]">
-            <InputText
-              type="password"
-              placeholder="Confirmar contraseña"
-              id="password_confirm_registro"
-              onChange={handleInputChange}
-              value={confirmPassword}
+          <div className="mb-3 w-[100%]">
+            <InputText 
+              type="repassword" 
+              id="repassword_registro" 
+              placeholder="Repite la contraseña" 
+              value={password} 
+              onChange={handleInputChange} 
             />
           </div>
-          <div className="w-[80%] flex items-center">
-            <Checkbox
-              id="terminos_check"
-              onChange={handleInputChange}
-              checked={termsChecked}
-            />
-            <span className="text-white text-xl">
-              Acepto los{' '}
-              <span className="text-[#0619da]">términos y condiciones</span>
-            </span>
+          <div className="w-[80%] flex items-center align-center">
+            <Checkbox id="terminos_check" checked={isChecked} onChange={handleCheckboxChange} /> 
+            <span className="text-white text-lg">Acepto los <span className="text-[#ffd000]">términos y condiciones</span></span> 
           </div>
-          <button
-            type="submit"
-            className={
-              allComplete
-                ? 'bg-[#1725537b] hover:bg-[#304264] duration-300 transition-all-02s rounded-md py-4 px-20 text-lg font-semibold text-white mb-6 m-4'
-                : 'bg-[#E1E1E1] mb-2 rounded-md py-4 px-20 text-lg font-semibold text-gray-500 mb-6 m-4'
-            }
+          <button 
+            type="submit" 
+            className={allComplete ? "bg-[#0033ab] mt-4 hover:bg-[#0018ab] transition-all-02s rounded-md py-4 px-20 text-lg font-semibold text-white" 
+            : "mt-4 bg-[#E1E1E1] rounded-md py-4 px-20 text-lg font-semibold text-gray-500 mb-6"}
+            disabled={!allComplete || isLoadingRegistro} 
           >
-            {isLoadingRegistro ? (
-              <div className="w-5 h-5 rounded-full animate-spin border-y border-solid border-yellow-500 border-t-transparent"></div>
-            ) : (
-              'Registrate'
-            )}
+            {isLoadingRegistro ? <div className="w-5 h-5 rounded-full animate-spin border-y border-solid border-yellow-500 border-t-transparent"></div> : 'Iniciar sesión'}
           </button>
-          <div className="flex mb-4 items-center">
-            <span className='text-white text-xl'>
-              ¿Ya preregistrado?{' '}
-              <Link href="/signin" className="text-[#0619da] text-xl cursor-pointer underline">
-                Inicia sesión
-              </Link>
-            </span>
-          </div>
+          <p className='text-white text-xl mb-2'>Si ya tienes una cuenta entonces puedes <Link href={"/signin"} className='text-[#346bea] underline'>iniciar sesion</Link></p>
         </form>
-      ) : (
-        <form className="w-[90vw] h-[80vh] md:w-40 bg-white md:h-[30rem] md:w-[40rem] md:shadow-lg rounded-md flex flex-col justify-center items-center">
-          <div className="font-bold text-[#45576C] text-4xl md:text-3xl text-center w-full mb-4 mt-6">
-            Verificación de correo
-          </div>
-          <div className="text-[#45576C] text-2xl md:text-lg text-center w-full mb-8 mt-6">
-            Ingresa el código enviado a tu correo.
-          </div>
-          <div className="w-[80%] mb-4">
-            <InputCode
-              length={6}
-              id="codigo_verificacion"
-              onChange={handleInputChange}
-              value={codigo}
-            />
-          </div>
-          <button
-            type="submit"
-            className="bg-[#F06C15] hover:bg-[#eb7b31] transition-all-02s rounded-md py-4 px-20 text-lg font-semibold text-white mb-6"
-          >
-            {isLoadingRegistro ? (
-              <div className="w-5 h-5 rounded-full animate-spin border-y border-solid border-yellow-500 border-t-transparent"></div>
-            ) : (
-              'Verificar'
-            )}
-          </button>
-          <Link className="text-[#F06C15] underline" href="/">
-            Volver
-          </Link>
-        </form>
-      )}
-    </>
-  )
+      </div>
+    </div>
+  );
 }
 
-export default RegistroForm
+export default LoginForm;

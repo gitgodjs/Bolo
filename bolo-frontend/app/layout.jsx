@@ -13,9 +13,9 @@ const RootLayout = ({ children }) => {
   const [isLog, setIsLog] = useState(false);
 
   const path = usePathname();
-
+  
   useEffect(()=>{
-    if(path == "/signup" || path == "/signin") {
+    if(path.includes("/signup") || path.includes("/signin")) {
       setIsLog(true)
     } else {
       setIsLog(false); 
