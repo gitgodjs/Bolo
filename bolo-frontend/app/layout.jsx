@@ -12,6 +12,9 @@ const RootLayout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLog, setIsLog] = useState(false);
 
+  //temporal
+  const [isPerfil, setIsPerfil] = useState(false);
+
   const path = usePathname();
   
   useEffect(()=>{
@@ -20,6 +23,13 @@ const RootLayout = ({ children }) => {
     } else {
       setIsLog(false); 
     };
+
+    if(path.includes("/perfil")) {
+      setIsPerfil(true);
+    } else {
+      setIsPerfil(false);
+    };
+
   }, [path])
 
   return (
@@ -43,13 +53,23 @@ const RootLayout = ({ children }) => {
         }}>
           {!isLog ? (
             <div>
-              <div className="nav-container">
-                <Nav setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} />
-              </div>
+              {/* Renderiza el Nav superior solo si no estás en el perfil */}
+              {!isPerfil && (
+                <div className="nav-container">
+                  <Nav setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} />
+                </div>
+              )}
+              
+              {/* Renderiza siempre el contenido de children */}
               <main>{children}</main>
+
+              {/* MobileNav siempre se renderiza */}
               <MobileNav />
             </div>
-          ) : <main>{children}</main>}
+          ) : (
+            <main>{children}</main>
+          )}
+
 
           <Toaster 
             position='bottom-center'

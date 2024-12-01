@@ -37,7 +37,7 @@ const MobileNav = () => {
       <NavItem href={"/"} icon={<MoonIcon className="h-10 w-10" />} text="Noches" />
       {!user && (
         <>
-          <NavItem href={"/perfil"} icon={<UserCircleIcon className="h-10 w-10" />} text="Mi Perfil" />
+          <NavItem href={"/perfil/juanmroman20@gmail.com"} icon={<UserCircleIcon className="h-10 w-10" />} text="Mi Perfil" />
         </>
       )}
     </div>
